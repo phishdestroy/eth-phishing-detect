@@ -1,0 +1,32 @@
+name: Auto Sync Upstream Main Branch
+
+on:
+  schedule:
+    # Run every 10 minutes (at minute 0, 10, 20, 30, 40, 50 of every hour)
+    - cron: '*/10 * * * *' 
+  workflow_dispatch: # Allows manual run from the Actions tab
+
+jobs:
+  sync_upstream:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sync Fork Main with Upstream
+        uses: tgymnich/fork-sync@v2.0
+        with:
+          # The default token provided by GitHub Actions
+          github_token: ${{ secrets.GITHUB_TOKEN }} 
+          
+          # Owner of the original (Upstream) repository (MetaMask)
+          owner: MetaMask 
+          
+          # Name of the original repository
+          repository: eth-phishing-detect 
+          
+          # Upstream branch to pull changes from
+          base: main 
+          
+          # Your fork's branch to update
+          head: main 
+          
+          # Merge strategy (merge, rebase, or squash)
+          merge_method: merge
