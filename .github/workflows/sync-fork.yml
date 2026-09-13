@@ -1,0 +1,37 @@
+name: Auto Sync MetaMask Lite
+
+on:
+  schedule:
+    - cron: '0 */4 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  UPSTREAM_URL: "https://github.com/MetaMask/eth-phishing-detect.git"
+  TARGET_BRANCH: "main"
+
+jobs:
+  sync_upstream:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Sync
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          mkdir -p /tmp/backup
+          cp -r .github/workflows/* /tmp/backup/
+          git remote add upstream $UPSTREAM_URL
+          git fetch upstream $TARGET_BRANCH --depth=1
+          git reset --hard upstream/$TARGET_BRANCH
+          cp -r /tmp/backup/* .github/workflows/
+          git add .github/workflows
+          git commit -m "Sync upstream"
+          git push -f origin $TARGET_BRANCH
