@@ -1,8 +1,8 @@
 {
-  "checked_at": "2026-11-10T13:24:43.722863+00:00",
+  "checked_at": "2026-11-11T12:38:53.209372+00:00",
   "upstream": "MetaMask/eth-phishing-detect",
   "upstream_branch": "main",
-  "upstream_commit": "3215fce9599af769d9e04215873a4cda0d99464c",
+  "upstream_commit": "7ab66519b3fb30886a6c6d4d5c350ef5072822b3",
   "version": 1,
   "workflow_policy": "preserve fork workflows; never import upstream workflows"
 }
